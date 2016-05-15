@@ -1,37 +1,62 @@
 package control;
 
 import com.mint.io.modbus.ModbusTCP_Connection;
+import com.mint.io.modbus.functions.ModbusTCP_ReadInputRegisters;
+import com.mint.io.modbus.functions.ModbusTCP_WriteMultipleRegisters;
 
 public class Evaporateur extends Module{
+	
 	short PreviousInput=0;
-	short PreviousOutputs[]={0,0};
-	public Evaporateur(){
-		this.state=State.STOP;
-		this.input.InputRegister=new short[1];
+	short PreviousOutputs=0;
+	public ModbusTCP_ReadInputRegisters functionRIR;
+	public ModbusTCP_WriteMultipleRegisters functionWMR;
+	
+	public Evaporateur(TableInputBoolean tableBi, TableInputRegister tableRi, TableOutputBoolean tableBo, TableOutputRegister tableRo){
+		
+		this.input.InputRegister=new short[2];
+		this.input.Address=new int[2];
 		this.output.HoldingRegister=new short[1];
-	}
-	void checkState(TableInputBoolean tableB, TableInputRegister tableD, ModbusTCP_Connection connection){
+		this.output.Address=new int[1];
+		
 		int i=-1;
-		while(!tableB.Tableau[i].name.equals("T_CONT") || i!=tableB.taille){
-				i++;
-				if (tableB.Tableau[i].name.equals("T_CONT")){
-					this.input.Address=tableB.Tableau[i].address;
-				}
-		}
+		while(!tableRi.Tableau[i].name.equals("T_CONT") || i!=tableRi.taille){i++;};
+		this.input.Address[0]=tableRi.Tableau[i].address;
+		
+		i=-1;
+		while(!tableRi.Tableau[i].name.equals("ContainerSetpointTemp") || i!=tableRi.taille){i++;};
+		this.input.Address[1]=tableRi.Tableau[i].address;
 	}
+	
+	void checkState(TableInputBoolean tableB, TableInputRegister tableD, ModbusTCP_Connection connection){
+
+		this.functionRIR=new ModbusTCP_ReadInputRegisters(this.input.Address[0],1);
+		connection.execute(this.functionRIR);
+		this.input.InputRegister[0]=(short)this.functionRIR.getRegisters(0);
+		
+		this.functionRIR=new ModbusTCP_ReadInputRegisters(this.input.Address[1],1);
+		connection.execute(this.functionRIR);
+		this.input.InputRegister[1]=(short)this.functionRIR.getRegisters(1);
+	}
+	
+	public double ConvertIntToValue(short entier){
+		return (entier+32768)*0.01-327.68;
+	}
+	
+	public short ConvertValuetoInt(double reel){
+		return (short)(reel*100-32768);
+	}
+	
 	void HandleState(TableOutputBoolean tableB, TableOutputRegister tableD, Mode mode, ModbusTCP_Connection connection){
-		double consigne=35;
+		double consigne=ConvertIntToValue(this.input.InputRegister[1]);
 		double K=0.1,Ti=30,deltaT=0.1;
 		if(mode==Mode.Started){
-			this.output.HoldingRegister[0]=(short) (K*(consigne-(double)this.input.InputRegister[0])+(double)this.PreviousOutputs[0]+K*deltaT/(2*Ti)*((double)this.input.InputRegister[0]+(double)this.PreviousInput));
+			this.output.HoldingRegister[0]=ConvertValuetoInt(K*(consigne-ConvertIntToValue(this.input.InputRegister[0]))+ConvertIntToValue(this.PreviousOutputs)+K*deltaT/(2*Ti)*(ConvertIntToValue(this.input.InputRegister[0])+ConvertIntToValue(this.PreviousInput)));
 			this.output.HoldingRegister[1]=this.output.HoldingRegister[0];
-			this.PreviousOutputs[0]=this.output.HoldingRegister[0];
-			this.PreviousOutputs[1]=this.output.HoldingRegister[1];
+			this.PreviousOutputs=this.output.HoldingRegister[0];
 			this.PreviousInput=this.input.InputRegister[0];
 		}
 		else{
 			this.output.HoldingRegister[0]=0;
-			this.output.HoldingRegister[1]=0;
 		}
 	}
 }

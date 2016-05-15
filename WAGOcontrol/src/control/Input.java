@@ -5,5 +5,5 @@ abstract class Input {
 	public short HoldingRegister[];
 	public boolean Coils[];
 	public boolean DiscreteInput[];
-	public int Address;
+	public int Address[];
 }

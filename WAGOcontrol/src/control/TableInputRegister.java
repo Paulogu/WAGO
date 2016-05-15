@@ -40,7 +40,7 @@ public class TableInputRegister{
 			this.Tableau[21].name= "TRS";
 			this.Tableau[22].name= "TRIT";
 			this.Tableau[23].name= "TRST";
-			this.Tableau[24].name= "TRSA";
+			this.Tableau[24].name= "TRSA"; //Aerocondenseur
 			this.Tableau[25].name= "TRSP";
 			
 			this.Tableau[26].name= "TES";
@@ -63,7 +63,7 @@ public class TableInputRegister{
 			this.Tableau[42].name= "GLOBAL_EnergyMeter.positiveActiveEnergy";
 			this.Tableau[43].name= "GLOBAL_EnergyMeter.negativeActiveEnergy";
 			
-			this.Tableau[44].name= "RPUMP.pump_A.pIn";
+			this.Tableau[44].name= "RPUMP.pump_A.pIn"; // Aerocondenseur
 			this.Tableau[45].name= "RPUMP.pump_A.pOut";
 			this.Tableau[46].name= "RPUMP.regulation_setpoint";
 			this.Tableau[47].name= "RPUMP.temperature";

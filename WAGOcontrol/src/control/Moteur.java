@@ -11,7 +11,7 @@ public class Moteur extends Module{
 	public ModbusTCP_ReadInputRegisters functionRIR;
 	public ModbusTCP_WriteMultipleCoils functionWMC;
 	
-	public Moteur(){
+	public Moteur(TableInputBoolean tableA, TableInputRegister tableB, TableOutputBoolean tableC, TableOutputRegister tableD){
 		this.state=State.STOP;
 		this.input.InputRegister=new short[10];
 		// {TESI_J320, TESI_J416, TCRA_J320, TCRA_J416, TCRR_J320, TCRR_J416, TFA_J320, TFA_J416, TFR_J320, TFR_J416}
@@ -20,6 +20,21 @@ public class Moteur extends Module{
 		/*{Actuateur_J416_SET_TO_ORC , Actuateur_J416_SET_TO_BYPASS, Actuateur_J320_SET_TO_ORC, Actuateur_J320_SET_TO_BYPASS,
 		   J416W_V1_SET_TO_ORC , J416W_V1_SET_TO_BYPASS, J320W_V1_SET_TO_ORC , J320W_V1_SET_TO_BYPASS}
 		*/
+		this.output.Address=new int[2];
+		this.input.Address=new int[2];
+		int i=-1;
+		while(!tableA.Tableau[i].name.equals("J320W_V1.isBypassLimitswitch") || i!=tableA.taille){i++;};
+		this.input.Address[0]=tableA.Tableau[i].address;
+		i=-1;
+		while(!tableB.Tableau[i].name.equals("TESI_J320") || i!=tableB.taille){i++;};
+		this.input.Address[1]=tableB.Tableau[i].address;
+		i=-1;
+		while(!tableD.Tableau[i].name.equals("TCRR_J320") || i!=tableD.taille){i++;};
+		this.output.Address[0]=tableD.Tableau[i].address;
+		i=-1;
+		while(!tableC.Tableau[i].name.equals("J320W_V1.isBypassLimitswitch") || i!=tableC.taille){i++;};
+		this.output.Address[1]=tableC.Tableau[i].address;
+		functionWMC.setAddress(this.output.Address[1]);
 	}
 	
 	
@@ -30,19 +45,13 @@ public class Moteur extends Module{
 	
 	void checkState(TableInputBoolean tableB, TableInputRegister tableD, ModbusTCP_Connection connection){
 		
-		int i=-1;
-		while(!tableB.Tableau[i].name.equals("J320W_V1.isBypassLimitswitch") || i!=tableB.taille){i++;};
-		this.input.Address=tableB.Tableau[i].address;
-		this.functionRDI=new ModbusTCP_ReadDiscreteInputs(this.input.Address,8);
+		this.functionRDI=new ModbusTCP_ReadDiscreteInputs(this.input.Address[0],8);
 		connection.execute(this.functionRDI);
 		for (int j=0;j<8;j++){
 			this.input.DiscreteInput[j]=this.functionRDI.getInputs(j);
 		}
 		
-		i=-1;
-		while(!tableB.Tableau[i].name.equals("TESI_J320") || i!=tableB.taille){i++;};
-		this.input.Address=tableD.Tableau[i].address;
-		this.functionRIR=new ModbusTCP_ReadInputRegisters(this.input.Address,8);
+		this.functionRIR=new ModbusTCP_ReadInputRegisters(this.input.Address[1],8);
 		connection.execute(this.functionRIR);
 		for (int j=0;j<8;j++){
 			this.input.InputRegister[j]=(short)this.functionRIR.getRegisters(j);
@@ -53,6 +62,7 @@ public class Moteur extends Module{
 	void HandleState(TableOutputBoolean tableB, TableOutputRegister tableD, Mode mode, ModbusTCP_Connection connection){
 		
 		if (mode==Mode.EmergencyShutdown || mode==Mode.ShuttingDown || mode==Mode.Shutdown){
+			
 			this.output.Coils[0]=false;
 			this.output.Coils[2]=false;	
 			this.output.Coils[4]=false;	
@@ -94,6 +104,7 @@ public class Moteur extends Module{
 		
 			
 		if (mode==Mode.WaterloopSecurity){
+			
 			if(ConvertIntToValue(this.input.InputRegister[4])<70){
 				this.output.Coils[4]=true;
 			}
@@ -121,12 +132,7 @@ public class Moteur extends Module{
 			
 		}
 		
-		int i=-1;
-		while(!tableB.Tableau[i].name.equals("J320W_V1.isBypassLimitswitch") || i!=tableB.taille){i++;};
-		this.output.Address=tableB.Tableau[i].address;
 		functionWMC.setValues(this.output.Coils);	
-		functionWMC.setAddress(this.output.Address);
 		connection.execute(functionWMC);
 	}
 }
-
