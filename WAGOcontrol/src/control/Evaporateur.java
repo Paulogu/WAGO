@@ -2,14 +2,14 @@ package control;
 
 import com.mint.io.modbus.ModbusTCP_Connection;
 import com.mint.io.modbus.functions.ModbusTCP_ReadInputRegisters;
-import com.mint.io.modbus.functions.ModbusTCP_WriteMultipleRegisters;
+import com.mint.io.modbus.functions.ModbusTCP_WriteSingleRegister;
 
 public class Evaporateur extends Module{
 	
 	short PreviousInput=0;
 	short PreviousOutputs=0;
 	public ModbusTCP_ReadInputRegisters functionRIR;
-	public ModbusTCP_WriteMultipleRegisters functionWMR;
+	public ModbusTCP_WriteSingleRegister functionWSR;
 	
 	public Evaporateur(TableInputBoolean tableBi, TableInputRegister tableRi, TableOutputBoolean tableBo, TableOutputRegister tableRo){
 		
@@ -25,6 +25,12 @@ public class Evaporateur extends Module{
 		i=-1;
 		while(!tableRi.Tableau[i].name.equals("ContainerSetpointTemp") || i!=tableRi.taille){i++;};
 		this.input.Address[1]=tableRi.Tableau[i].address;
+		
+		i=-1;
+		while(!tableRo.Tableau[i].name.equals("ContainerSetpointTemp") || i!=tableRo.taille){i++;};
+		this.output.Address[0]=tableRo.Tableau[i].address;
+		
+		this.functionWSR.setAddress(this.output.Address[0]);
 	}
 	
 	void checkState(TableInputBoolean tableB, TableInputRegister tableD, ModbusTCP_Connection connection){
@@ -58,5 +64,7 @@ public class Evaporateur extends Module{
 		else{
 			this.output.HoldingRegister[0]=0;
 		}
+		this.functionWSR.setInteger(this.output.HoldingRegister[0]);
+		connection.execute(this.functionWSR);
 	}
 }

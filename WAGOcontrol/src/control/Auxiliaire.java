@@ -27,7 +27,7 @@ public class Auxiliaire extends Module{
 		this.output.Address[0]=tableRo.Tableau[i].address;
 		
 		this.functionRIR=new ModbusTCP_ReadInputRegisters(this.input.Address[0],1);
-		this.functionWSR.setAddress(this.output.Address[1]);
+		this.functionWSR.setAddress(this.output.Address[0]);
 	}
 	
 	
