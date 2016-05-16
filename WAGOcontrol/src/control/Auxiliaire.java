@@ -19,10 +19,10 @@ public class Auxiliaire extends Module{
 		this.output.HoldingRegister=new short[1];
 		this.output.Address=new int[1];
 				
-		int i=-1;
+		int i=0;
 		while(!tableRi.Tableau[i].name.equals("ACLT1") || i!=tableRi.taille){i++;};
 		this.input.Address[0]=tableRi.Tableau[i].address;
-		i=-1;
+		i=0;
 		while(!tableRo.Tableau[i].name.equals("ACCV2") || i!=tableRo.taille){i++;};
 		this.output.Address[0]=tableRo.Tableau[i].address;
 		

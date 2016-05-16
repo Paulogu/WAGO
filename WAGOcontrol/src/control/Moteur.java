@@ -22,16 +22,16 @@ public class Moteur extends Module{
 		*/
 		this.output.Address=new int[2];
 		this.input.Address=new int[2];
-		int i=-1;
+		int i=0;
 		while(!tableA.Tableau[i].name.equals("J320W_V1.isBypassLimitswitch") || i!=tableA.taille){i++;};
 		this.input.Address[0]=tableA.Tableau[i].address;
-		i=-1;
+		i=0;
 		while(!tableB.Tableau[i].name.equals("TESI_J320") || i!=tableB.taille){i++;};
 		this.input.Address[1]=tableB.Tableau[i].address;
-		i=-1;
+		i=0;
 		while(!tableD.Tableau[i].name.equals("TCRR_J320") || i!=tableD.taille){i++;};
 		this.output.Address[0]=tableD.Tableau[i].address;
-		i=-1;
+		i=0;
 		while(!tableC.Tableau[i].name.equals("J320W_V1.isBypassLimitswitch") || i!=tableC.taille){i++;};
 		this.output.Address[1]=tableC.Tableau[i].address;
 		functionWMC.setAddress(this.output.Address[1]);

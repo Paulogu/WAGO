@@ -20,15 +20,15 @@ public class Aerocondenseur extends Module{
 		this.output.HoldingRegister=new short[2];		
 		this.output.Address=new int[1];
 
-		int i=-1;
+		int i=0;
 		while(!tableRi.Tableau[i].name.equals("RPUMP.pump_A.pIn") || i!=tableRi.taille){i++;};
 		this.input.Address[0]=tableRi.Tableau[i].address;
 		
-		i=-1;
+		i=0;
 		while(!tableRi.Tableau[i].name.equals("TRSA") || i!=tableRi.taille){i++;};
 		this.input.Address[1]=tableRi.Tableau[i].address;
 		
-		i=-1;
+		i=0;
 		while(!tableRo.Tableau[i].name.equals("COND1_2") || i!=tableRo.taille){i++;};
 		this.output.Address[0]=tableRo.Tableau[i].address;
 		
