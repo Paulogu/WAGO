@@ -62,7 +62,6 @@ public class Turbogenerateur extends Module{
 		double K=0.1,Ti=30,deltaT=0.1;
 		if(mode==Mode.Started){
 			this.output.HoldingRegister[0]= ConvertValuetoInt(K*(consigne-ConvertIntToValue(this.input.InputRegister[0]))+ConvertIntToValue(this.PreviousOutputs)+K*deltaT/(2*Ti)*(ConvertIntToValue(this.input.InputRegister[0])+ConvertIntToValue(this.PreviousInput)));
-			this.output.HoldingRegister[1]=this.output.HoldingRegister[0];
 			this.PreviousOutputs=this.output.HoldingRegister[0];
 			this.PreviousInput=this.input.InputRegister[0];
 		}

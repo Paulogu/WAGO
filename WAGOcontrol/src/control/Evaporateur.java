@@ -13,35 +13,28 @@ public class Evaporateur extends Module{
 	
 	public Evaporateur(TableInputBoolean tableBi, TableInputRegister tableRi, TableOutputBoolean tableBo, TableOutputRegister tableRo){
 		
-		this.input.InputRegister=new short[2];
-		this.input.Address=new int[2];
+		this.input.InputRegister=new short[1];
+		this.input.Address=new int[1];
 		this.output.HoldingRegister=new short[1];
 		this.output.Address=new int[1];
 		
 		int i=0;
 		while(!tableRi.Tableau[i].name.equals("T_CONT") || i!=tableRi.taille){i++;};
 		this.input.Address[0]=tableRi.Tableau[i].address;
-		
-		i=0;
-		while(!tableRi.Tableau[i].name.equals("ContainerSetpointTemp") || i!=tableRi.taille){i++;};
-		this.input.Address[1]=tableRi.Tableau[i].address;
-		
+
 		i=0;
 		while(!tableRo.Tableau[i].name.equals("ContainerSetpointTemp") || i!=tableRo.taille){i++;};
 		this.output.Address[0]=tableRo.Tableau[i].address;
 		
+		this.functionRIR=new ModbusTCP_ReadInputRegisters(this.input.Address[0],1);
 		this.functionWSR.setAddress(this.output.Address[0]);
 	}
 	
 	void checkState(TableInputBoolean tableB, TableInputRegister tableD, ModbusTCP_Connection connection){
 
-		this.functionRIR=new ModbusTCP_ReadInputRegisters(this.input.Address[0],1);
 		connection.execute(this.functionRIR);
 		this.input.InputRegister[0]=(short)this.functionRIR.getRegisters(0);
 		
-		this.functionRIR=new ModbusTCP_ReadInputRegisters(this.input.Address[1],1);
-		connection.execute(this.functionRIR);
-		this.input.InputRegister[1]=(short)this.functionRIR.getRegisters(1);
 	}
 	
 	public double ConvertIntToValue(short entier){
