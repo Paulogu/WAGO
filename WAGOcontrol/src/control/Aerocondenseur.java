@@ -12,25 +12,29 @@ public class Aerocondenseur extends Module{
 	short PreviousInput=0;
 	short PreviousOutputs=0;
 	byte[] bytes;
+	int a,b,c;
 	
 	public Aerocondenseur(TableInputBoolean tableBi, TableInputRegister tableRi, TableOutputBoolean tableBo, TableOutputRegister tableRo){
 		
 		this.input.InputRegister=new short[2];
 		this.input.Address=new int[2];
-		this.output.HoldingRegister=new short[2];		
+		this.output.HoldingRegister=new short[1];		
 		this.output.Address=new int[1];
 
 		int i=0;
 		while(!tableRi.Tableau[i].name.equals("RPUMP.pump_A.pIn") || i!=tableRi.taille){i++;};
 		this.input.Address[0]=tableRi.Tableau[i].address;
+		a=i;
 		
 		i=0;
 		while(!tableRi.Tableau[i].name.equals("TRSA") || i!=tableRi.taille){i++;};
 		this.input.Address[1]=tableRi.Tableau[i].address;
+		b=i;
 		
 		i=0;
 		while(!tableRo.Tableau[i].name.equals("COND1_2") || i!=tableRo.taille){i++;};
 		this.output.Address[0]=tableRo.Tableau[i].address;
+		c=i;
 		
 		this.functionWMR= new ModbusTCP_WriteMultipleRegisters(this.output.Address[0], 2);
 		this.bytes= this.functionWMR.getData();
@@ -42,10 +46,12 @@ public class Aerocondenseur extends Module{
 		this.functionRIR=new ModbusTCP_ReadInputRegisters(this.input.Address[0],1);
 		connection.execute(this.functionRIR);
 		this.input.InputRegister[0]=(short)this.functionRIR.getRegisters(0);
+		tableD.Tableau[a].value=this.input.InputRegister[0];
 		
 		this.functionRIR=new ModbusTCP_ReadInputRegisters(this.input.Address[1],1);
 		connection.execute(this.functionRIR);
 		this.input.InputRegister[1]=(short)this.functionRIR.getRegisters(1);
+		tableD.Tableau[b].value=this.input.InputRegister[1];
 	
 	}
 	
@@ -74,12 +80,15 @@ public class Aerocondenseur extends Module{
 		}
 		else{
 			this.output.HoldingRegister[0]=0;
-			this.output.HoldingRegister[1]=0;
 		}
 		
 		for (int i=0;i<2;i++){
 			ByteUtilities.writeInteger16(bytes, i*2, this.output.HoldingRegister[i]);
 		}
 		connection.execute(this.functionWMR);
+	}
+	
+	void SecurityCheck(TableInputBoolean tableB, TableInputRegister tableD){
+		
 	}
 }

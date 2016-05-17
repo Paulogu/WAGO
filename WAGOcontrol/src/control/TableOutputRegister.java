@@ -2,12 +2,15 @@ package control;
 
 public class TableOutputRegister{
 
-	public CaseTable[] Tableau;
+	class CaseT extends CaseTable{
+		public short value;
+	}
+	public CaseT[] Tableau;
 	public int taille;
 	
 	public TableOutputRegister(){
-		this.taille=8;
-		this.Tableau=new CaseTable[this.taille];
+		this.taille=9;
+		this.Tableau=new CaseT[this.taille];
 		
 		this.Tableau[0].name="TCRR_J416"; //Moteur
 		this.Tableau[1].name="TCRR_J320"; //Moteur
@@ -17,6 +20,7 @@ public class TableOutputRegister{
 		this.Tableau[5].name="TES_OUT";
 		this.Tableau[6].name="ACCV1";
 		this.Tableau[7].name="ACCV2";
+		this.Tableau[8].name="IC01.setpoint_rotSpeed";
 		
 	}
 }

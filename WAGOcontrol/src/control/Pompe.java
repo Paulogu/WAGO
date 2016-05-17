@@ -36,4 +36,8 @@ public class Pompe extends Module{
 	void HandleState(TableOutputBoolean tableB, TableOutputRegister tableD, Mode mode, ModbusTCP_Connection connection){
 		
 	}
+	
+	void SecurityCheck(TableInputBoolean tableB, TableInputRegister tableD){
+		
+	}
 }

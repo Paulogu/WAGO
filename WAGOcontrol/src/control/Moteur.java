@@ -12,7 +12,7 @@ public class Moteur extends Module{
 	public ModbusTCP_WriteMultipleCoils functionWMC;
 	
 	public Moteur(TableInputBoolean tableA, TableInputRegister tableB, TableOutputBoolean tableC, TableOutputRegister tableD){
-		this.state=State.STOP;
+
 		this.input.InputRegister=new short[10];
 		// {TESI_J320, TESI_J416, TCRA_J320, TCRA_J416, TCRR_J320, TCRR_J416, TFA_J320, TFA_J416, TFR_J320, TFR_J416}
 		this.input.DiscreteInput=new boolean[8];
@@ -134,5 +134,9 @@ public class Moteur extends Module{
 		
 		functionWMC.setValues(this.output.Coils);	
 		connection.execute(functionWMC);
+	}
+	
+	void SecurityCheck(TableInputBoolean tableB, TableInputRegister tableD){
+		
 	}
 }

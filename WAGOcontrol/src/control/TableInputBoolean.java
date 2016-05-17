@@ -2,12 +2,15 @@ package control;
 
 public class TableInputBoolean{
 
-	public CaseTable[] Tableau;
+	class CaseT extends CaseTable{
+		public boolean value;
+	}
+	public CaseT[] Tableau;
 	public int taille;
 	
 	public TableInputBoolean(){
 		this.taille=101;
-		this.Tableau=new CaseTable[this.taille];
+		this.Tableau=new CaseT[this.taille];
 		for (int i=0;i<this.taille;i++){
 			this.Tableau[i].address=i;
 		}

@@ -60,4 +60,7 @@ public class Evaporateur extends Module{
 		this.functionWSR.setInteger(this.output.HoldingRegister[0]);
 		connection.execute(this.functionWSR);
 	}
+	void SecurityCheck(TableInputBoolean tableB, TableInputRegister tableD){
+		
+	}
 }

@@ -8,23 +8,34 @@ public class Auxiliaire extends Module{
 	
 	public ModbusTCP_ReadInputRegisters functionRIR;
 	public ModbusTCP_WriteSingleRegister functionWSR;
+	public ModbusTCP_WriteSingleRegister functionWC;
 	short PreviousInput=0;
 	short PreviousOutputs=0;
 	
 	
 	public Auxiliaire(TableInputBoolean tableBi, TableInputRegister tableRi, TableOutputBoolean tableBo, TableOutputRegister tableRo){
 		
-		this.input.InputRegister=new short[1];
-		this.input.Address=new int[1];
-		this.output.HoldingRegister=new short[1];
-		this.output.Address=new int[1];
+		this.input.InputRegister=new short[2];
+		this.input.Address=new int[2];
+		this.output.HoldingRegister=new short[2];
+		this.output.Coils=new boolean[1];
+		this.output.Address=new int[3];
 				
 		int i=0;
 		while(!tableRi.Tableau[i].name.equals("ACLT1") || i!=tableRi.taille){i++;};
 		this.input.Address[0]=tableRi.Tableau[i].address;
 		i=0;
+		while(!tableRi.Tableau[i].name.equals("ALT1") || i!=tableRi.taille){i++;};
+		this.input.Address[1]=tableRi.Tableau[i].address;
+		i=0;
 		while(!tableRo.Tableau[i].name.equals("ACCV2") || i!=tableRo.taille){i++;};
 		this.output.Address[0]=tableRo.Tableau[i].address;
+		i=0;
+		while(!tableBo.Tableau[i].name.equals("ALAC1") || i!=tableBo.taille){i++;};
+		this.output.Address[1]=tableBo.Tableau[i].address;
+		i=0;
+		while(!tableRo.Tableau[i].name.equals("IC01.setpoint_rotSpeed") || i!=tableRo.taille){i++;};
+		this.output.Address[2]=tableRo.Tableau[i].address;
 		
 		this.functionRIR=new ModbusTCP_ReadInputRegisters(this.input.Address[0],1);
 		this.functionWSR.setAddress(this.output.Address[0]);
@@ -66,5 +77,16 @@ public class Auxiliaire extends Module{
 
 		this.functionWSR.setInteger(this.output.HoldingRegister[0]);
 		connection.execute(this.functionWSR);
+	}
+	
+	void SecurityCheck(TableInputBoolean tableB, TableInputRegister tableD){
+		if (this.input.InputRegister[1]>75){
+			this.output.Coils[0]=true;
+			this.output.HoldingRegister[1]=1500;
+		}
+		
+		if (this.input.InputRegister[1]<35){
+			//OilTooLow
+		}
 	}
 }

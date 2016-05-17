@@ -58,7 +58,7 @@ public class Turbogenerateur extends Module{
 	}
 	
 	void HandleState(TableOutputBoolean tableB, TableOutputRegister tableD, Mode mode, ModbusTCP_Connection connection){
-		double consigne=TsatFromP((double) this.input.InputRegister[1])+3;
+		double consigne=TsatFromP(ConvertIntToValue(this.input.InputRegister[1]))+3;
 		double K=0.1,Ti=30,deltaT=0.1;
 		if(mode==Mode.Started){
 			this.output.HoldingRegister[0]= ConvertValuetoInt(K*(consigne-ConvertIntToValue(this.input.InputRegister[0]))+ConvertIntToValue(this.PreviousOutputs)+K*deltaT/(2*Ti)*(ConvertIntToValue(this.input.InputRegister[0])+ConvertIntToValue(this.PreviousInput)));
@@ -71,5 +71,9 @@ public class Turbogenerateur extends Module{
 
 		this.functionWSR.setInteger(this.output.HoldingRegister[0]);	
 		connection.execute(this.functionWSR);
+	}
+	
+	void SecurityCheck(TableInputBoolean tableB, TableInputRegister tableD){
+		
 	}
 }

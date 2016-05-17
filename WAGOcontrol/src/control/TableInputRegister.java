@@ -2,12 +2,15 @@ package control;
 
 public class TableInputRegister{
 
-	public CaseTable[] Tableau;
+	class CaseT extends CaseTable{
+		public short value;
+	}
+	public CaseT[] Tableau;
 	public int taille;
 		
 	public TableInputRegister(){
 			this.taille=127;
-			this.Tableau=new CaseTable[this.taille];
+			this.Tableau=new CaseT[this.taille];
 			
 			this.Tableau[0].address=0;
 			for (int i=1;i<this.taille;i++){
