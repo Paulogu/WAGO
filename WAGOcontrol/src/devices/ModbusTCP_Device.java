@@ -17,4 +17,11 @@ public abstract class ModbusTCP_Device {
 	
 	public abstract void read();
 	public abstract void write();
+	
+	static double ITV (int entier){
+		return (entier*100-32768);
+	}
+	static int VTI (double value){
+		return (int)((value+32768)*0.01-327.68);
+	}
 }

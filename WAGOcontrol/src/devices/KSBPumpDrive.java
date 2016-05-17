@@ -9,22 +9,26 @@ import com.mint.io.modbus.utilities.ByteUtilities;
 
 public class KSBPumpDrive extends ModbusTCP_Device {
 		
-	private ModbusTCP_WriteMultipleRegisters f01 = new ModbusTCP_WriteMultipleRegisters(0x00, 1);
-	private ModbusTCP_ReadInputRegisters f02 = new ModbusTCP_ReadInputRegisters(0x00, 8);
+	private int addressOutput,addressInput;
+	private ModbusTCP_WriteMultipleRegisters f01;
+	private ModbusTCP_ReadInputRegisters f02;
 	
-	private int inPressure;
-	private int outPressure;
-	private int regulation_setpoint;
-	private int temperature;
-	private int temperatureP;
-	private int elec_consumption;
-	private int flow;
-	private int rotation_speed;
-	private int time_to_maintenance;
-	private int status;
+	private int inPressure,
+				outPressure,
+				regulation_setpoint,
+				temperature,
+				elec_consumption,
+				flow,
+				rotation_speed,
+				time_to_maintenance,
+				status;
 	
-	public KSBPumpDrive(String address, int port) throws UnknownHostException, IOException {
+	public KSBPumpDrive(String address, int port, int addIn, int addOut) throws UnknownHostException, IOException {
 		super(address, port);
+		this.addressInput=addIn;
+		this.addressOutput=addOut;
+		this.f01= new ModbusTCP_WriteMultipleRegisters(addressOutput, 1);
+		this.f02= new ModbusTCP_ReadInputRegisters(addressInput, 8);
 	}
 	
 	@Override
@@ -45,51 +49,47 @@ public class KSBPumpDrive extends ModbusTCP_Device {
 	public void write(){		
 		byte[] bytes = f01.getData();
 		ByteUtilities.writeInteger16(bytes, 0, this.rotation_speed);
+		connection.execute(f01);
 	}
 			
 	public double getinPressure(){
-		return (this.inPressure+32768)*0.01-327.68;
+		return ITV(this.inPressure);
 	}
 	
 	public double getoutPressure(){
-		return (this.outPressure+32768)*0.01-327.68;
+		return ITV(this.outPressure);
 	}
 	
 	public double getregulation_setpoint(){
-		return (this.regulation_setpoint+32768)*0.01-327.68;
+		return ITV(this.regulation_setpoint);
 	}
 	
 	public double gettemperature(){
-		return (this.temperature+32768)*0.01-327.68;
-	}
-	
-	public double gettemperatureP(){
-		return (this.temperatureP+32768)*0.01-327.68;
+		return ITV(this.temperature);
 	}
 	
 	public double getelec_consumption(){
-		return (this.elec_consumption+32768)*0.01-327.68;
+		return ITV(this.elec_consumption);
 	}
 	
 	public double getflow(){
-		return (this.flow+32768)*0.01-327.68;
+		return ITV(this.flow);
 	}
 	
 	public void setRotationSpeed(double value){
-		this.rotation_speed=(int)(value*100-32768);
-		this.temperatureP=this.temperature;
+		this.rotation_speed=VTI(value);
 	}
 	
 	public double getRotationSpeed(){
-		return (this.rotation_speed+32768)*0.01-327.68;
+		return ITV(this.rotation_speed);
 	}
 	
 	public double gettime_to_maintenance(){
-		return (this.time_to_maintenance+32768)*0.01-327.68;
+		return ITV(this.time_to_maintenance);
 	}
 	
 	public double getstatus(){
-		return (this.status+32768)*0.01-327.68;
+		return ITV(this.status);
 	}
 }	
 

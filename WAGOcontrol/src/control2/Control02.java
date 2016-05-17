@@ -1,7 +1,6 @@
 package control2;
 
-public class Control01 {
-
+public class Control02 {
 	private Plant plant;
 	private PID pid01 = new PID() {
 		
