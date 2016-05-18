@@ -1,6 +1,6 @@
 package control2;
 
-public class Control_ACCV2 {
+public class Control_Auxiliaire2 {
 	
 	private Plant plant;
 	private PID pid = new PID() {

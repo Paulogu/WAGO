@@ -6,20 +6,31 @@ import java.net.UnknownHostException;
 import com.mint.io.modbus.ModbusTCP_Connection;
 
 import devices.Aerocondenser;
-import devices.Auxiliaire_ACCV2;
+import devices.Auxiliaire_Refrigerant;
+import devices.Echangeur;
 import devices.KSBPumpDrive;
+import devices.Motor;
+import devices.Turbogenerator;
 
 public class Plant {
 	
 	public KSBPumpDrive pumpGlycol;
 	public KSBPumpDrive pumpWater;
 	public Aerocondenser aero;
-	public Auxiliaire_ACCV2 aux2;
+	public Auxiliaire_Refrigerant aux2;
+	public Echangeur echang;
+	public Turbogenerator turbo;
+	public Motor JGC320;
+	public Motor JGC416;
 
 	public Plant() throws UnknownHostException, IOException {
 		this.pumpGlycol = new KSBPumpDrive("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT,0,0);
 		this.pumpWater = new KSBPumpDrive("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT,0,0);
 		this.aero = new Aerocondenser("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
-		this.aux2 = new Auxiliaire_ACCV2("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT,0,0);
+		this.aux2 = new Auxiliaire_Refrigerant("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT,0,0);
+		this.echang = new Echangeur("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
+		this.turbo = new Turbogenerator("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
+		this.JGC320 = new Motor("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT,0,0,0);
+		this.JGC416 = new Motor("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT,0,0,0);
 	}
 }

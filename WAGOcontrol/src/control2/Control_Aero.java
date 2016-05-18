@@ -29,7 +29,13 @@ public class Control_Aero {
 
 	};
 	
-	public void control(){		
+	public void control(Mode mode){
+		
+		if (mode==Mode.EmergencyShutdown || mode==Mode.Shutdown || mode==Mode.ShuttingDown){
+			plant.aero.setCOND1_2(0);
+		}
+		if (mode==Mode.Started || mode==Mode.StartingUp || mode==Mode.TurbineStopping || mode==Mode.WaterloopSecurity){
 			pid.compute();
+		}
 	}
 }

@@ -7,13 +7,13 @@ import com.mint.io.modbus.functions.ModbusTCP_ReadInputRegisters;
 import com.mint.io.modbus.functions.ModbusTCP_WriteMultipleRegisters;
 import com.mint.io.modbus.utilities.ByteUtilities;
 
-public class Auxiliaire_ACCV2 extends ModbusTCP_Device{
+public class Auxiliaire_Refrigerant extends ModbusTCP_Device{
 	
 	private int addressOutput, addressInput;
 	private ModbusTCP_ReadInputRegisters f01;
 	private ModbusTCP_WriteMultipleRegisters f02;
 	
-	public Auxiliaire_ACCV2(String address, int port, int addIn, int addOut) throws UnknownHostException, IOException {
+	public Auxiliaire_Refrigerant(String address, int port, int addIn, int addOut) throws UnknownHostException, IOException {
 		super(address, port);
 		this.addressInput = addIn;
 		this.addressOutput = addOut;

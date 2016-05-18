@@ -9,6 +9,7 @@ import com.mint.io.modbus.ModbusTCP_Connection;
 public abstract class ModbusTCP_Device {
 
 	public ModbusTCP_Connection connection;
+	public Mode_Function modefunction;
 	
 	public ModbusTCP_Device(String address, int port) throws UnknownHostException, IOException {
 		super();

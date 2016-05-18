@@ -4,14 +4,17 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import com.mint.io.modbus.functions.ModbusTCP_ReadInputRegisters;
-import com.mint.io.modbus.functions.ModbusTCP_WriteMultipleRegisters;
+//import com.mint.io.modbus.functions.ModbusTCP_WriteMultipleRegisters;
 
 public class Turbogenerator extends ModbusTCP_Device{
 	
-	private ModbusTCP_WriteMultipleRegisters f01 = new ModbusTCP_WriteMultipleRegisters(0x00, 1);
+	//private ModbusTCP_WriteMultipleRegisters f01 = new ModbusTCP_WriteMultipleRegisters(0x00, 1);
 	private ModbusTCP_ReadInputRegisters f02 = new ModbusTCP_ReadInputRegisters(0x00, 39);
 	
-	private int currentSpeed,
+	private int TRIT,
+				TRST,
+				PRST,
+				currentSpeed,
 				AFE_OLI_PremierDef,
 				setpoint_rotSpeed,
 				currentPower,	
@@ -57,6 +60,9 @@ public class Turbogenerator extends ModbusTCP_Device{
 				
 				OND1_OLI_PremierDef,
 				OND2_OLI_PremierDef;
+	
+	private boolean BypassTurbineToORC,
+					BypassTurbineToBypass;
 	
 	public Turbogenerator(String address, int port) throws UnknownHostException, IOException {
 		super(address, port);
@@ -105,10 +111,192 @@ public class Turbogenerator extends ModbusTCP_Device{
 		this.OND4_OLI_StatusW1=this.f02.getRegisters(36);
 		this.OND1_OLI_PremierDef=this.f02.getRegisters(37);
 		this.OND2_OLI_PremierDef=this.f02.getRegisters(38);
+		this.TRIT=this.f02.getRegisters(38);
+		this.TRST=this.f02.getRegisters(38);
+		this.PRST=this.f02.getRegisters(38);
 	}
 	
 	@Override
 	public void write(){		
-
+	}
+	
+	public double getTRIT(){
+		return ITV(this.TRIT);
+	}
+	
+	public double getTRST(){
+		return ITV(this.TRST);
+	}
+	
+	public double getPRST(){
+		return ITV(this.PRST);
+	}
+	
+	public double getcurrentSpeed(){
+		return ITV(this.currentSpeed);
+	}
+	
+	public double getAFE_OLI_PremierDef(){
+		return ITV(this.AFE_OLI_PremierDef);
+	}
+	
+	public double getsetpoint_rotSpeed(){
+		return ITV(this.setpoint_rotSpeed);
+	}
+	
+	public void setsetpoint_rotSpeed(double value){
+		this.setpoint_rotSpeed=VTI(value);
+	}
+	
+	public double getcurrentPower(){
+		return ITV(this.currentPower);
+	}
+	
+	public double gettempKTY1S1(){
+		return ITV(this.tempKTY1S1);
+	}
+	
+	public double gettempKTY1S2(){
+		return ITV(this.tempKTY1S2);
+	}
+	
+	public double gettempKTY1S3(){
+		return ITV(this.tempKTY1S3);
+	}
+	
+	public double gettempKTY1S4(){
+		return ITV(this.tempKTY1S4);
+	}
+	
+	public double gettempKTY2S1(){
+		return ITV(this.tempKTY2S1);
+	}
+	
+	public double gettempKTY2S2(){
+		return ITV(this.tempKTY2S2);
+	}
+	
+	public double gettempKTY2S3(){
+		return ITV(this.tempKTY2S3);
+	}
+	
+	public double gettempKTY2S4(){
+		return ITV(this.tempKTY2S4);
+	}	
+	
+	public double getAFE_ORI_Vdc(){
+		return ITV(this.AFE_ORI_Vdc);
+	}
+	
+	public double getAFE_ORI_Iac(){
+		return ITV(this.AFE_ORI_Iac);
+	}
+	
+	public double getAFE_ORI_Freq(){
+		return ITV(this.AFE_ORI_Freq);
+	}
+	
+	public double getAFE_ORI_Vac(){
+		return ITV(this.AFE_ORI_Vac);
+	}
+	
+	public double getAFE_OLI_StatusW1(){
+		return ITV(this.AFE_OLI_StatusW1);
+	}
+	
+	public double getOND1_ORI_Iac(){
+		return ITV(this.OND1_ORI_Iac);
+	}
+	
+	public double getOND1_ORI_Vac(){
+		return ITV(this.OND1_ORI_Vac);
+	}
+	
+	public double getOND1_ORI_Iq(){
+		return ITV(this.OND1_ORI_Iq);
+	}
+	
+	public double getOND1_ORI_Id(){
+		return ITV(this.OND1_ORI_Id);
+	}
+	
+	public double getOND1_OLI_StatusW1(){
+		return ITV(this.OND1_OLI_StatusW1);
+	}
+	
+	public double getOND2_ORI_Iac(){
+		return ITV(this.OND2_ORI_Iac);
+	}
+	
+	public double getOND2_ORI_Vac(){
+		return ITV(this.OND2_ORI_Vac);
+	}
+	
+	public double getOND2_ORI_Iq(){
+		return ITV(this.OND2_ORI_Iq);
+	}
+	
+	public double getOND2_ORI_Id(){
+		return ITV(this.OND2_ORI_Id);
+	}
+	
+	public double getOND2_OLI_StatusW1(){
+		return ITV(this.OND2_OLI_StatusW1);
+	}
+	
+	public double getOND3_ORI_Iac(){
+		return ITV(this.OND3_ORI_Iac);
+	}
+	
+	public double getOND3_ORI_Vac(){
+		return ITV(this.OND3_ORI_Vac);
+	}
+	
+	public double getOND3_ORI_Iq(){
+		return ITV(this.OND3_ORI_Iq);
+	}
+	
+	public double getOND3_ORI_Id(){
+		return ITV(this.OND3_ORI_Id);
+	}
+	
+	public double getOND3_OLI_StatusW1(){
+		return ITV(this.OND3_OLI_StatusW1);
+	}
+	
+	public double getOND4_ORI_Iac(){
+		return ITV(this.OND4_ORI_Iac);
+	}
+	
+	public double getOND4_ORI_Vac(){
+		return ITV(this.OND4_ORI_Vac);
+	}
+	
+	public double getOND4_ORI_Iq(){
+		return ITV(this.OND4_ORI_Iq);
+	}
+	
+	public double getOND4_ORI_Id(){
+		return ITV(this.OND4_ORI_Id);
+	}
+	
+	public double getOND4_OLI_StatusW1(){
+		return ITV(this.OND4_OLI_StatusW1);
+	}
+	
+	public double getOND1_OLI_PremierDef(){
+		return ITV(this.OND1_OLI_PremierDef);
+	}
+	
+	public double getOND2_OLI_PremierDef(){
+		return ITV(this.OND2_OLI_PremierDef);
+	}
+	
+	public void setBypassTurbineToORC(boolean value){
+		this.BypassTurbineToORC=value;
+	}
+	
+	public void setBypassTurbineToBypass(boolean value){
+		this.BypassTurbineToBypass=value;
 	}
 }

@@ -24,11 +24,10 @@ public class Motor extends ModbusTCP_Device{
 				thermalPower,
 				totalEnergy;
 	
-	private boolean ActuateurR,
-					ValveR;
-	
-	private boolean ActuateurW,
-					ValveW;
+	private boolean ActuatorToORC,
+					ActuatorToBypass,
+					ValveToORC,
+					ValveToBypass;
 	
 	public Motor(String address, int port, int addIn, int addOut1, int addOut2) throws UnknownHostException, IOException {
 		super(address, port);
@@ -57,13 +56,20 @@ public class Motor extends ModbusTCP_Device{
 	@Override
 	public void write() {
 		this.f01.setAddress(this.addressOutput[0]);
-		this.f01.setValue(this.ActuateurW);
+		this.f01.setValue(this.ActuatorToORC);
 		connection.execute(f01);
 		
 		this.f01.setAddress(this.addressOutput[1]);
-		this.f01.setValue(this.ValveW);
+		this.f01.setValue(this.ActuatorToBypass);
 		connection.execute(f01);
-
+		
+		this.f01.setAddress(this.addressOutput[2]);
+		this.f01.setValue(this.ValveToORC);
+		connection.execute(f01);
+		
+		this.f01.setAddress(this.addressOutput[2]);
+		this.f01.setValue(this.ValveToBypass);
+		connection.execute(f01);
 	}
 	
 	public double getTESI(){
@@ -106,19 +112,19 @@ public class Motor extends ModbusTCP_Device{
 		return ITV(this.totalEnergy);
 	}
 	
-	public boolean getActuatorR(){
-		return this.ActuateurR;
+	public void setActuatorToORC(boolean value){
+		this.ActuatorToORC=value;
 	}
 	
-	public boolean getValveR(){
-		return this.ValveR;
+	public void setActuatorToBypass(boolean value){
+		this.ActuatorToBypass=value;
 	}
 	
-	public void setActateurW(boolean value){
-		this.ActuateurW=value;
+	public void setValveToORC(boolean value){
+		this.ValveToORC=value;
 	}
 	
-	public void setValveW(boolean value){
-		this.ValveW=value;
+	public void setValveToBypass(boolean value){
+		this.ValveToBypass=value;
 	}
 }
