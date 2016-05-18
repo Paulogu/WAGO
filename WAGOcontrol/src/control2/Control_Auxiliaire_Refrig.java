@@ -1,6 +1,6 @@
 package control2;
 
-public class Control_Auxiliaire2 {
+public class Control_Auxiliaire_Refrig {
 	
 	private Plant plant;
 	private PID pid = new PID() {
@@ -23,7 +23,7 @@ public class Control_Auxiliaire2 {
 
 		@Override
 		public double Consigne() {
-			return plant.aux2.getsetpoint_rotSpeed();
+			return plant.aux2.getaclt1_setpoint();
 		}
 
 	};
