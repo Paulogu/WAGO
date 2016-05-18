@@ -25,24 +25,24 @@ public class KSBPumpDrive extends ModbusTCP_Device {
 	
 	public KSBPumpDrive(String address, int port, int addIn, int addOut) throws UnknownHostException, IOException {
 		super(address, port);
-		this.addressInput=addIn;
-		this.addressOutput=addOut;
-		this.f01= new ModbusTCP_WriteMultipleRegisters(addressOutput, 1);
-		this.f02= new ModbusTCP_ReadInputRegisters(addressInput, 8);
+		this.addressInput = addIn;
+		this.addressOutput = addOut;
+		this.f01 = new ModbusTCP_WriteMultipleRegisters(addressOutput, 1);
+		this.f02 = new ModbusTCP_ReadInputRegisters(addressInput, 8);
 	}
 	
 	@Override
 	public void read(){
 
 		connection.execute(f02);
-		this.inPressure=this.f02.getRegisters(0);
-		this.outPressure=this.f02.getRegisters(1);
-		this.regulation_setpoint=this.f02.getRegisters(2);
-		this.temperature=this.f02.getRegisters(3);
-		this.elec_consumption=this.f02.getRegisters(4);
-		this.flow=this.f02.getRegisters(5);
-		this.time_to_maintenance=this.f02.getRegisters(6);
-		this.status=this.f02.getRegisters(7);
+		this.inPressure = this.f02.getRegisters(0);
+		this.outPressure = this.f02.getRegisters(1);
+		this.regulation_setpoint = this.f02.getRegisters(2);
+		this.temperature = this.f02.getRegisters(3);
+		this.elec_consumption = this.f02.getRegisters(4);
+		this.flow = this.f02.getRegisters(5);
+		this.time_to_maintenance = this.f02.getRegisters(6);
+		this.status = this.f02.getRegisters(7);
 	}
 	
 	@Override

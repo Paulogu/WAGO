@@ -14,7 +14,8 @@ public class Aerocondenser extends ModbusTCP_Device{
 		super(address, port);
 	}
 
-	private int COND1_2,
+	private int TRSA,
+				COND1_2,
 				COND3_4;
 	
 	@Override
@@ -29,8 +30,16 @@ public class Aerocondenser extends ModbusTCP_Device{
 		connection.execute(f01);
 	}
 	
+	public double getTRSA(){
+		return ITV(this.TRSA);
+	}
+	
 	public void setCOND1_2(double value){
 		this.COND1_2=VTI(value);
+	}
+	
+	public double getCOND1_2(){
+		return ITV(this.COND1_2);
 	}
 	
 	public void setCOND3_4(double value){

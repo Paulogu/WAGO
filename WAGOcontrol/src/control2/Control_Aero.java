@@ -1,33 +1,35 @@
 package control2;
 
-public class Control02 {
+public class Control_Aero {
+	
 	private Plant plant;
-	private PID pid01 = new PID() {
+	private double subcooling = 7; // en [K]
+	private PID pid = new PID() {
 		
 		@Override
 		public void setValue(double value) {
-			plant.pump.setRotationSpeed(value);
+			plant.aero.setCOND1_2(value);
 			this.inp=getInput();		
 		}
 		
 		@Override
 		public double getInput() {
-			return plant.pump.gettemperature();
+			return plant.aero.getTRSA();
 		}
 
 		@Override
 		public double getOutput() {
-			return plant.pump.getRotationSpeed();
+			return plant.aero.getCOND1_2();
 		}
 
 		@Override
 		public double Consigne() {
-			return plant.pump.getregulation_setpoint();
+			return TsatFromP(plant.pumpWater.getinPressure())-subcooling;
 		}
 
 	};
 	
 	public void control(){		
-			pid01.compute();
-	}	
+			pid.compute();
+	}
 }

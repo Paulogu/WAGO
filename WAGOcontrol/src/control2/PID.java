@@ -13,7 +13,10 @@ public abstract class PID {
 	public abstract double getOutput();
 	
 	public abstract double Consigne();
-
+	
+	static double TsatFromP(double value){
+		return Math.pow(Math.log(value),4) * 0.7101 + Math.pow(Math.log(value),3) * 3.4647 + Math.pow(Math.log(value),2) * 13.655 + Math.log(value) * 57.095 + 14.819;
+	}
 
 	public void compute(){	
 		double in = getInput();

@@ -1,34 +1,34 @@
 package control2;
 
-public class Control01 {
+public class Control_pumpGlycol {
 
 	private Plant plant;
-	private PID pid01 = new PID() {
+	private PID pid = new PID() {
 		
 		@Override
 		public void setValue(double value) {
-			plant.pump.setRotationSpeed(value);
+			plant.pumpGlycol.setRotationSpeed(value);
 			this.inp=getInput();		
 		}
 		
 		@Override
 		public double getInput() {
-			return plant.pump.gettemperature();
+			return plant.pumpGlycol.gettemperature();
 		}
 
 		@Override
 		public double getOutput() {
-			return plant.pump.getRotationSpeed();
+			return plant.pumpGlycol.getRotationSpeed();
 		}
 
 		@Override
 		public double Consigne() {
-			return plant.pump.getregulation_setpoint();
+			return plant.pumpGlycol.getregulation_setpoint();
 		}
 
 	};
 	
 	public void control(){		
-			pid01.compute();
+			pid.compute();
 	}	
 }
