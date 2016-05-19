@@ -61,6 +61,10 @@ public class Auxiliaire_Refrigerant extends ModbusTCP_Device{
 		this.ACCV1=VTI(value);
 	}
 	
+	public double getACCV1(){
+		return ITV(this.ACCV1);
+	}
+	
 	public void setACCV2(double value){
 		this.ACCV2=VTI(value);
 	}
