@@ -7,7 +7,6 @@ public class Control_Turbo {
 	private Plant plant;
 	private double superheating = 3; // en [K]
 	private PID pid = new PID() {
-		
 		@Override
 		public void setValue(double value) {
 			plant.turbo.setsetpoint_rotSpeed(value);
@@ -31,6 +30,8 @@ public class Control_Turbo {
 	};
 	
 	public void control(Mode mode){
+		this.pid.max=3200;
+		this.pid.min=600;
 		if (mode==Mode.EmergencyShutdown || mode==Mode.ShuttingDown){
 			plant.turbo.setBypassTurbineToBypass(true);
 			plant.turbo.setBypassTurbineToORC(false);
@@ -46,6 +47,7 @@ public class Control_Turbo {
 		}
 		if (mode==Mode.StartingUp){
 			if (plant.turbo.modefunction==Mode_Function.AUTO){
+				pid.compute();
 			}
 			else{
 				

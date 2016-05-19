@@ -11,16 +11,18 @@ public class Control_Auxiliaire_Huile {
 	}
 	
 	public void control(Mode mode){
+		this.margin=10;
+		this.hysteresis=10;
 		if (mode==Mode.EmergencyShutdown || mode==Mode.Shutdown){
 			plant.aux1.setALAC1(false);
 		}
-		if (plant.aux1.getALAC1()==false && plant.aux1.getALT1() < TsatFromP(plant.pumpWater.getinPressure())+ margin + hysteresis){
+		if (plant.aux1.getALAC1() == false && plant.aux1.getALT1() < TsatFromP(plant.pumpWater.getinPressure())+ margin + hysteresis){
 			plant.aux1.setALAC1(false);
 		}
-		else if (plant.aux1.getALAC1()==true && plant.aux1.getALT1() > TsatFromP(plant.pumpWater.getinPressure())+ margin){
+		else if (plant.aux1.getALAC1() == true && plant.aux1.getALT1() > TsatFromP(plant.pumpWater.getinPressure())+ margin){
 			plant.aux1.setALAC1(true);
 		}
-		else if (plant.aux1.getALAC1()==true && plant.aux1.getALT1() < TsatFromP(plant.pumpWater.getinPressure())+ margin){
+		else if (plant.aux1.getALAC1() == true && plant.aux1.getALT1() < TsatFromP(plant.pumpWater.getinPressure())+ margin){
 			plant.aux1.setALAC1(false);
 		}
 		else{

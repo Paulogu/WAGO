@@ -29,6 +29,8 @@ public class Control_Container_Cooling {
 	};
 	
 	public void control(Mode mode){
+		this.pid.max=327.67;
+		this.pid.min=this.pid.max*0.1;
 		if (mode==Mode.EmergencyShutdown){
 			plant.cool.setContainerCooling(0);
 		}

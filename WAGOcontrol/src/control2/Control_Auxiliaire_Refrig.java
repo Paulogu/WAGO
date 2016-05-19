@@ -39,9 +39,10 @@ public class Control_Auxiliaire_Refrig {
 		}
 		else{
 			pid.compute();
-			if (n==6){
+			if (n==3){
 				plant.aux2.setACP1(!(plant.aux2.getACP1()));
 				plant.aux2.setACP1(!(plant.aux2.getACP2()));
+				n=0;
 			}
 		}
 	}	

@@ -7,23 +7,23 @@ public class Control_pumpGlycol {
 		
 		@Override
 		public void setValue(double value) {
-			plant.pumpGlycol.setRotationSpeed(value);
+			plant.pumpGlycol1.setRotationSpeed(value);
 			this.inp=getInput();		
 		}
 		
 		@Override
 		public double getInput() {
-			return plant.pumpGlycol.gettemperature();
+			return plant.pumpGlycol1.gettemperature();
 		}
 
 		@Override
 		public double getOutput() {
-			return plant.pumpGlycol.getRotationSpeed();
+			return plant.pumpGlycol1.getRotationSpeed();
 		}
 
 		@Override
 		public double Consigne() {
-			return plant.pumpGlycol.getregulation_setpoint();
+			return plant.pumpGlycol1.getregulation_setpoint();
 		}
 
 	};

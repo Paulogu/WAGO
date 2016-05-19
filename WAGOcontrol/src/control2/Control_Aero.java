@@ -9,6 +9,7 @@ public class Control_Aero{
 		@Override
 		public void setValue(double value) {
 			plant.aero.setCOND1_2(value);
+			plant.aero.setCOND3_4(value);
 			this.inp=getInput();		
 		}
 		
@@ -30,7 +31,8 @@ public class Control_Aero{
 	};
 	
 	public void control(Mode mode){
-		
+		this.pid.max=327.67;
+		this.pid.max=-328.67;
 		if (mode==Mode.EmergencyShutdown || mode==Mode.Shutdown || mode==Mode.ShuttingDown){
 			plant.aero.setCOND1_2(0);
 			plant.aero.setCOND3_4(0);

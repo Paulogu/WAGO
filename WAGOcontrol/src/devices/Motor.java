@@ -5,15 +5,18 @@ import java.net.UnknownHostException;
 
 import com.mint.io.modbus.functions.ModbusTCP_ReadInputRegisters;
 import com.mint.io.modbus.functions.ModbusTCP_WriteCoil;
+import com.mint.io.modbus.functions.ModbusTCP_WriteSingleRegister;
 
 public class Motor extends ModbusTCP_Device{
 	
 	private ModbusTCP_WriteCoil f01 = new ModbusTCP_WriteCoil();
 	private ModbusTCP_ReadInputRegisters f02 = new ModbusTCP_ReadInputRegisters(0x00, 10);
+	private ModbusTCP_WriteSingleRegister f03 = new ModbusTCP_WriteSingleRegister();
 	
 	private int TESI, 
 				TCRA,
 				TCRR,
+				TCRRtoP,// Output
 				TFA,
 				TFR,
 				temperatureOut,
@@ -64,6 +67,10 @@ public class Motor extends ModbusTCP_Device{
 		this.f01.setAddress(3);
 		this.f01.setValue(this.ValveToBypass);
 		connection.execute(f01);
+		
+		this.f03.setInteger(this.TCRRtoP);
+		this.f03.setAddress(0);
+		connection.execute(f03);
 	}
 	
 	public double getTESI(){
@@ -76,6 +83,10 @@ public class Motor extends ModbusTCP_Device{
 	
 	public double getTCRR(){
 		return ITV(this.TCRR);
+	}
+	
+	public void setTCRRtoP(double value){
+		this.TCRRtoP=VTI(value);
 	}
 	
 	public double getTFA(){

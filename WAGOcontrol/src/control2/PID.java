@@ -2,7 +2,7 @@ package control2;
 
 public abstract class PID {
 	
-	public double K,Ti,deltaT;
+	public double K=0.1,Ti=30,deltaT=1;
 	public double max,min;
 	public double inp;
 	
