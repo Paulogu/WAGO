@@ -10,21 +10,17 @@ import com.mint.io.modbus.utilities.ByteUtilities;
 
 public class Auxiliaire_Refrigerant extends ModbusTCP_Device{
 	
-	private int addressOutput, addressInput;
-	private ModbusTCP_ReadInputRegisters f01;
-	private ModbusTCP_WriteMultipleRegisters f02;
+	private ModbusTCP_ReadInputRegisters f01 = new ModbusTCP_ReadInputRegisters(0, 2);
+	private ModbusTCP_WriteMultipleRegisters f02 = new ModbusTCP_WriteMultipleRegisters(0, 2);
 	private ModbusTCP_WriteMultipleCoils f03 = new ModbusTCP_WriteMultipleCoils();
 	
-	public Auxiliaire_Refrigerant(String address, int port, int addIn, int addOut) throws UnknownHostException, IOException {
+	public Auxiliaire_Refrigerant(String address, int port) throws UnknownHostException, IOException {
 		super(address, port);
-		this.addressInput = addIn;
-		this.addressOutput = addOut;
-		this.f01 = new ModbusTCP_ReadInputRegisters(addressInput, 2);
-		this.f02 = new ModbusTCP_WriteMultipleRegisters(addressOutput, 1);
 		this.f03.setAddress(0);
 	}
 
 	private int ACLT1,
+				ACCV1,
 				ACCV2,
 				aclt1_setpoint;
 	
@@ -43,6 +39,7 @@ public class Auxiliaire_Refrigerant extends ModbusTCP_Device{
 	public void write() {
 		
 		byte[] bytes = f02.getData();
+		ByteUtilities.writeInteger16(bytes, 0, this.ACCV1);
 		ByteUtilities.writeInteger16(bytes, 0, this.ACCV2);
 		connection.execute(f02);
 		
@@ -60,6 +57,10 @@ public class Auxiliaire_Refrigerant extends ModbusTCP_Device{
 		return ITV(this.aclt1_setpoint);
 	}
 
+	public void setACCV1(double value){
+		this.ACCV1=VTI(value);
+	}
+	
 	public void setACCV2(double value){
 		this.ACCV2=VTI(value);
 	}
@@ -72,7 +73,16 @@ public class Auxiliaire_Refrigerant extends ModbusTCP_Device{
 		this.ACP1=value;
 	}
 	
+	
 	public void setACP2(boolean value){
 		this.ACP2=value;
+	}
+	
+	public boolean getACP1(){
+		return this.ACP1;
+	}
+	
+	public boolean getACP2(){
+		return this.ACP2;
 	}
 }

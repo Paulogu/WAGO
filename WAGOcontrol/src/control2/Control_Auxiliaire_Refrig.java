@@ -3,6 +3,7 @@ package control2;
 public class Control_Auxiliaire_Refrig {
 	
 	private Plant plant;
+	private int n=0;
 	private PID pid = new PID() {
 		
 		@Override
@@ -28,7 +29,20 @@ public class Control_Auxiliaire_Refrig {
 
 	};
 	
-	public void control(){		
+	public void control(Mode mode){
+		n++;
+		if (mode==Mode.EmergencyShutdown || mode==Mode.Shutdown){
+			plant.aux2.setACP1(false);
+			plant.aux2.setACP1(false);
+			plant.aux2.setACCV1(0);
+			plant.aux2.setACCV2(0);
+		}
+		else{
 			pid.compute();
+			if (n==6){
+				plant.aux2.setACP1(!(plant.aux2.getACP1()));
+				plant.aux2.setACP1(!(plant.aux2.getACP2()));
+			}
+		}
 	}	
 }

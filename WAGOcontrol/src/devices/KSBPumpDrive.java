@@ -9,9 +9,8 @@ import com.mint.io.modbus.utilities.ByteUtilities;
 
 public class KSBPumpDrive extends ModbusTCP_Device {
 		
-	private int addressOutput,addressInput;
-	private ModbusTCP_WriteMultipleRegisters f01;
-	private ModbusTCP_ReadInputRegisters f02;
+	private ModbusTCP_WriteMultipleRegisters f01 = new ModbusTCP_WriteMultipleRegisters(0, 1);
+	private ModbusTCP_ReadInputRegisters f02 = new ModbusTCP_ReadInputRegisters(0, 8);
 	
 	private int inPressure,
 				outPressure,
@@ -23,12 +22,8 @@ public class KSBPumpDrive extends ModbusTCP_Device {
 				time_to_maintenance,
 				status;
 	
-	public KSBPumpDrive(String address, int port, int addIn, int addOut) throws UnknownHostException, IOException {
+	public KSBPumpDrive(String address, int port) throws UnknownHostException, IOException {
 		super(address, port);
-		this.addressInput = addIn;
-		this.addressOutput = addOut;
-		this.f01 = new ModbusTCP_WriteMultipleRegisters(addressOutput, 1);
-		this.f02 = new ModbusTCP_ReadInputRegisters(addressInput, 8);
 	}
 	
 	@Override

@@ -31,18 +31,21 @@ public class Control_Turbo {
 	};
 	
 	public void control(Mode mode){
-		if (mode==Mode.EmergencyShutdown || mode==Mode.Shutdown || mode==Mode.ShuttingDown){
+		if (mode==Mode.EmergencyShutdown || mode==Mode.ShuttingDown){
 			plant.turbo.setBypassTurbineToBypass(true);
 			plant.turbo.setBypassTurbineToORC(false);
+		}
+		if (mode==Mode.Shutdown){
+			plant.turbo.setBypassTurbineToBypass(true);
+			plant.turbo.setBypassTurbineToORC(false);
+			plant.turbo.setsetpoint_rotSpeed(0);
 		}
 		if (mode==Mode.Started){
 			plant.turbo.setBypassTurbineToBypass(false);
 			plant.turbo.setBypassTurbineToORC(true);
-			pid.compute();
 		}
 		if (mode==Mode.StartingUp){
 			if (plant.turbo.modefunction==Mode_Function.AUTO){
-				pid.compute();
 			}
 			else{
 				

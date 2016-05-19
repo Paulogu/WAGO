@@ -17,7 +17,6 @@ public class Echangeur extends ModbusTCP_Device{
 				TRS,
 				TRSP,
 				T_amb,
-				T_cont,
 				PRS;
 	
 	@Override
@@ -27,8 +26,7 @@ public class Echangeur extends ModbusTCP_Device{
 		this.TRS = this.f01.getRegisters(1);
 		this.TRSP = this.f01.getRegisters(2);
 		this.T_amb = this.f01.getRegisters(3);
-		this.T_cont = this.f01.getRegisters(4);
-		this.PRS = this.f01.getRegisters(5);
+		this.PRS = this.f01.getRegisters(4);
 	}
 
 	@Override
@@ -49,10 +47,6 @@ public class Echangeur extends ModbusTCP_Device{
 	
 	public double getT_amb(){
 		return ITV(this.T_amb);
-	}
-	
-	public double getT_cont(){
-		return ITV(this.T_cont);
 	}
 	
 	public double getPRS(){

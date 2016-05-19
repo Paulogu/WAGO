@@ -8,6 +8,7 @@ import com.mint.io.modbus.ModbusTCP_Connection;
 import devices.Aerocondenser;
 import devices.Auxiliaire_Huile;
 import devices.Auxiliaire_Refrigerant;
+import devices.Container_Cooling;
 import devices.Echangeur;
 import devices.KSBPumpDrive;
 import devices.Motor;
@@ -24,16 +25,18 @@ public class Plant {
 	public Turbogenerator turbo;
 	public Motor JGC320;
 	public Motor JGC416;
+	public Container_Cooling cool;
 
 	public Plant() throws UnknownHostException, IOException {
-		this.pumpGlycol = new KSBPumpDrive("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT,0,0);
-		this.pumpWater = new KSBPumpDrive("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT,0,0);
+		this.pumpGlycol = new KSBPumpDrive("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
+		this.pumpWater = new KSBPumpDrive("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
 		this.aero = new Aerocondenser("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
 		this.aux1 = new Auxiliaire_Huile("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
-		this.aux2 = new Auxiliaire_Refrigerant("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT,0,0);
+		this.aux2 = new Auxiliaire_Refrigerant("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
 		this.echang = new Echangeur("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
 		this.turbo = new Turbogenerator("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
-		this.JGC320 = new Motor("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT,0,0,0);
-		this.JGC416 = new Motor("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT,0,0,0);
+		this.JGC320 = new Motor("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
+		this.JGC416 = new Motor("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
+		this.cool = new Container_Cooling("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
 	}
 }

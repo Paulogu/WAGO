@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import com.mint.io.modbus.functions.ModbusTCP_ReadInputRegisters;
-//import com.mint.io.modbus.functions.ModbusTCP_WriteMultipleRegisters;
+import com.mint.io.modbus.functions.ModbusTCP_WriteMultipleCoils;
 
 public class Turbogenerator extends ModbusTCP_Device{
 	
-	//private ModbusTCP_WriteMultipleRegisters f01 = new ModbusTCP_WriteMultipleRegisters(0x00, 1);
+	private ModbusTCP_WriteMultipleCoils f01 = new ModbusTCP_WriteMultipleCoils();
 	private ModbusTCP_ReadInputRegisters f02 = new ModbusTCP_ReadInputRegisters(0x00, 39);
 	
 	private int TRIT,
@@ -66,6 +66,7 @@ public class Turbogenerator extends ModbusTCP_Device{
 	
 	public Turbogenerator(String address, int port) throws UnknownHostException, IOException {
 		super(address, port);
+		this.f01.setAddress(0);
 	}
 	
 	@Override
@@ -117,7 +118,11 @@ public class Turbogenerator extends ModbusTCP_Device{
 	}
 	
 	@Override
-	public void write(){		
+	public void write(){
+		boolean values[]= new boolean [2];
+		values[0]=this.BypassTurbineToORC;values[1]=this.BypassTurbineToBypass;
+		this.f01.setValues(values);
+		connection.execute(f01);
 	}
 	
 	public double getTRIT(){

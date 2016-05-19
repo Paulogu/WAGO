@@ -8,8 +8,6 @@ import com.mint.io.modbus.functions.ModbusTCP_WriteCoil;
 
 public class Motor extends ModbusTCP_Device{
 	
-	private int addressInput;
-	private int addressOutput[]=new int[2];
 	private ModbusTCP_WriteCoil f01 = new ModbusTCP_WriteCoil();
 	private ModbusTCP_ReadInputRegisters f02 = new ModbusTCP_ReadInputRegisters(0x00, 10);
 	
@@ -29,12 +27,8 @@ public class Motor extends ModbusTCP_Device{
 					ValveToORC,
 					ValveToBypass;
 	
-	public Motor(String address, int port, int addIn, int addOut1, int addOut2) throws UnknownHostException, IOException {
+	public Motor(String address, int port) throws UnknownHostException, IOException {
 		super(address, port);
-		this.addressInput=addIn;
-		this.addressOutput[0]=addOut1;
-		this.addressOutput[1]=addOut1;
-		this.f02= new ModbusTCP_ReadInputRegisters(addressInput, 8);
 	}
 
 	@Override
@@ -55,19 +49,19 @@ public class Motor extends ModbusTCP_Device{
 
 	@Override
 	public void write() {
-		this.f01.setAddress(this.addressOutput[0]);
+		this.f01.setAddress(0);
 		this.f01.setValue(this.ActuatorToORC);
 		connection.execute(f01);
 		
-		this.f01.setAddress(this.addressOutput[1]);
+		this.f01.setAddress(1);
 		this.f01.setValue(this.ActuatorToBypass);
 		connection.execute(f01);
 		
-		this.f01.setAddress(this.addressOutput[2]);
+		this.f01.setAddress(2);
 		this.f01.setValue(this.ValveToORC);
 		connection.execute(f01);
 		
-		this.f01.setAddress(this.addressOutput[2]);
+		this.f01.setAddress(3);
 		this.f01.setValue(this.ValveToBypass);
 		connection.execute(f01);
 	}

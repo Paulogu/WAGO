@@ -1,6 +1,6 @@
 package control2;
 
-public class Control_Aero {
+public class Control_Aero{
 	
 	private Plant plant;
 	private double subcooling = 7; // en [K]
@@ -33,6 +33,7 @@ public class Control_Aero {
 		
 		if (mode==Mode.EmergencyShutdown || mode==Mode.Shutdown || mode==Mode.ShuttingDown){
 			plant.aero.setCOND1_2(0);
+			plant.aero.setCOND3_4(0);
 		}
 		if (mode==Mode.Started || mode==Mode.StartingUp || mode==Mode.TurbineStopping || mode==Mode.WaterloopSecurity){
 			pid.compute();
