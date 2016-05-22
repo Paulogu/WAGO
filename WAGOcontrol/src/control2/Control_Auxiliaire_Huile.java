@@ -13,7 +13,7 @@ public class Control_Auxiliaire_Huile {
 	public void control(Mode mode){
 		this.margin=10;
 		this.hysteresis=10;
-		if (mode==Mode.EmergencyShutdown || mode==Mode.Shutdown){
+		if (mode==Mode.Urgence){
 			plant.aux1.setALAC1(false);
 		}
 		if (plant.aux1.getALAC1() == false && plant.aux1.getALT1() < TsatFromP(plant.pumpWater.getinPressure())+ margin + hysteresis){

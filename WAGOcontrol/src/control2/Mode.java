@@ -5,4 +5,5 @@ public enum Mode {
 	STOP,
 	RunToStop,
 	StopToRun,
+	Urgence,
 }
