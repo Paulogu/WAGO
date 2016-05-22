@@ -28,7 +28,7 @@ public class Control_Turbo {
 	};
 	
 	public void control(Mode mode){
-		this.pid.max=3200;
+		/*this.pid.max=3200;
 		this.pid.min=600;
 		if (mode==Mode.EmergencyShutdown || mode==Mode.ShuttingDown){
 			plant.turbo.setBypassTurbineToBypass(true);
@@ -58,6 +58,6 @@ public class Control_Turbo {
 		if(mode==Mode.WaterloopSecurity){
 			plant.turbo.setBypassTurbineToBypass(false);
 			plant.turbo.setBypassTurbineToORC(true);
-		}
+		}*/
 	}	
 }
