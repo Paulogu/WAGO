@@ -6,6 +6,8 @@ import java.net.UnknownHostException;
 
 import com.mint.io.modbus.ModbusTCP_Connection;
 
+import control2.Mode_Function;
+
 public abstract class ModbusTCP_Device {
 
 	public ModbusTCP_Connection connection;

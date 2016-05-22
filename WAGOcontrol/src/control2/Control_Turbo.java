@@ -1,7 +1,5 @@
 package control2;
 
-import devices.Mode_Function;
-
 public class Control_Turbo {
 	
 	private Plant plant;

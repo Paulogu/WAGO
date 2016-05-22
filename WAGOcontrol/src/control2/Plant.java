@@ -16,8 +16,8 @@ import devices.Turbogenerator;
 
 public class Plant {
 	
-	public KSBPumpDrive pumpGlycol1;
-	public KSBPumpDrive pumpGlycol2;
+	public KSBPumpDrive pumpGlycol_320;
+	public KSBPumpDrive pumpGlycol_416;
 	public KSBPumpDrive pumpWater;
 	public Aerocondenser aero;
 	public Auxiliaire_Huile aux1;
@@ -29,8 +29,8 @@ public class Plant {
 	public Container_Cooling cool;
 
 	public Plant() throws UnknownHostException, IOException {
-		this.pumpGlycol1 = new KSBPumpDrive("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
-		this.pumpGlycol2 = new KSBPumpDrive("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
+		this.pumpGlycol_320 = new KSBPumpDrive("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
+		this.pumpGlycol_416 = new KSBPumpDrive("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
 		this.pumpWater = new KSBPumpDrive("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
 		this.aero = new Aerocondenser("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);
 		this.aux1 = new Auxiliaire_Huile("192.168.1.21", ModbusTCP_Connection.DEFAULT_PORT);

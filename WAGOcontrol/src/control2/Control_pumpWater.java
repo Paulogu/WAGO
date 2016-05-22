@@ -13,7 +13,7 @@ public class Control_pumpWater {
 		
 		@Override
 		public double getInput() {
-			return plant.pumpWater.gettemperature();
+			return plant.echang.getTES();
 		}
 
 		@Override
@@ -23,7 +23,7 @@ public class Control_pumpWater {
 
 		@Override
 		public double Consigne() {
-			return plant.pumpWater.getregulation_setpoint();
+			return 63;
 		}
 	};
 	
