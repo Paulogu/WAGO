@@ -25,8 +25,8 @@ public class Master_Control {
 			aux1.control(mode);
 			aux2.control(mode);
 			cool.control(mode);
-			M1.control(mode);
-			M2.control(mode);
+			M1.control();
+			M2.control();
 			pumpG1.control();
 			pumpG2.control();
 			pumpW.control();

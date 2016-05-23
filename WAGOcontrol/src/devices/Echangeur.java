@@ -7,7 +7,7 @@ import com.mint.io.modbus.functions.ModbusTCP_ReadInputRegisters;
 
 public class Echangeur extends ModbusTCP_Device{
 	
-	private ModbusTCP_ReadInputRegisters f01= new ModbusTCP_ReadInputRegisters(0,6);
+	private ModbusTCP_ReadInputRegisters f01;
 	
 	public Echangeur(String address, int port) throws UnknownHostException, IOException {
 		super(address, port);
@@ -22,11 +22,16 @@ public class Echangeur extends ModbusTCP_Device{
 	@Override
 	public void read() {
 		connection.execute(f01);
+		this.f01= new ModbusTCP_ReadInputRegisters(51,1);
 		this.TES = this.f01.getRegisters(0);
-		this.TRS = this.f01.getRegisters(1);
-		this.TRSP = this.f01.getRegisters(2);
-		this.T_amb = this.f01.getRegisters(3);
-		this.PRS = this.f01.getRegisters(4);
+		this.f01= new ModbusTCP_ReadInputRegisters(41,1);
+		this.TRS = this.f01.getRegisters(0);
+		this.f01= new ModbusTCP_ReadInputRegisters(49,1);
+		this.TRSP = this.f01.getRegisters(0);
+		this.f01= new ModbusTCP_ReadInputRegisters(61,1);
+		this.T_amb = this.f01.getRegisters(0);
+		this.f01= new ModbusTCP_ReadInputRegisters(53,1);
+		this.PRS = this.f01.getRegisters(0);
 	}
 
 	@Override

@@ -9,8 +9,8 @@ import com.mint.io.modbus.utilities.ByteUtilities;
 
 public class Container_Cooling extends ModbusTCP_Device {
 	
-	private ModbusTCP_WriteMultipleRegisters f01 = new ModbusTCP_WriteMultipleRegisters(0x00, 1);
-	private ModbusTCP_ReadInputRegisters f02 = new ModbusTCP_ReadInputRegisters(0,1);
+	private ModbusTCP_WriteMultipleRegisters f01 = new ModbusTCP_WriteMultipleRegisters(8,1);
+	private ModbusTCP_ReadInputRegisters f02 = new ModbusTCP_ReadInputRegisters(63,1);
 	
 	public Container_Cooling(String address, int port) throws UnknownHostException, IOException {
 		super(address, port);

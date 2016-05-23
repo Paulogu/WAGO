@@ -9,8 +9,8 @@ import com.mint.io.modbus.utilities.ByteUtilities;
 
 public class KSBPumpDrive extends ModbusTCP_Device {
 		
-	private ModbusTCP_WriteMultipleRegisters f01 = new ModbusTCP_WriteMultipleRegisters(0, 1);
-	private ModbusTCP_ReadInputRegisters f02 = new ModbusTCP_ReadInputRegisters(0, 8);
+	private ModbusTCP_WriteMultipleRegisters f01;
+	private ModbusTCP_ReadInputRegisters f02;
 	
 	private int inPressure,
 				outPressure,
@@ -20,10 +20,13 @@ public class KSBPumpDrive extends ModbusTCP_Device {
 				flow,
 				rotation_speed,
 				time_to_maintenance,
-				status;
+				status,
+				rotation_consigne;
 	
-	public KSBPumpDrive(String address, int port) throws UnknownHostException, IOException {
+	public KSBPumpDrive(String address, int port,int addr1, int addr2) throws UnknownHostException, IOException {
 		super(address, port);
+		this.f01 = new ModbusTCP_WriteMultipleRegisters(addr2,1);
+		this.f02 = new ModbusTCP_ReadInputRegisters(addr1,9);
 	}
 	
 	@Override
@@ -36,14 +39,15 @@ public class KSBPumpDrive extends ModbusTCP_Device {
 		this.temperature = this.f02.getRegisters(3);
 		this.elec_consumption = this.f02.getRegisters(4);
 		this.flow = this.f02.getRegisters(5);
-		this.time_to_maintenance = this.f02.getRegisters(6);
-		this.status = this.f02.getRegisters(7);
+		this.rotation_speed=this.f02.getRegisters(6);
+		this.time_to_maintenance = this.f02.getRegisters(7);
+		this.status = this.f02.getRegisters(8);
 	}
 	
 	@Override
 	public void write(){		
 		byte[] bytes = f01.getData();
-		ByteUtilities.writeInteger16(bytes, 0, this.rotation_speed);
+		ByteUtilities.writeInteger16(bytes, 0, this.rotation_consigne);
 		connection.execute(f01);
 	}
 			
@@ -72,7 +76,7 @@ public class KSBPumpDrive extends ModbusTCP_Device {
 	}
 	
 	public void setRotationSpeed(double value){
-		this.rotation_speed=VTI(value);
+		this.rotation_consigne=VTI(value);
 	}
 	
 	public double getRotationSpeed(){

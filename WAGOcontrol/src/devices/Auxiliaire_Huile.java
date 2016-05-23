@@ -9,12 +9,12 @@ import com.mint.io.modbus.functions.ModbusTCP_WriteCoil;
 
 public class Auxiliaire_Huile extends ModbusTCP_Device{
 	
-	private ModbusTCP_ReadInputRegisters f01 = new ModbusTCP_ReadInputRegisters(0,1);
+	private ModbusTCP_ReadInputRegisters f01 = new ModbusTCP_ReadInputRegisters(65,1);
 	private ModbusTCP_WriteCoil f02 = new ModbusTCP_WriteCoil();
 	
 	public Auxiliaire_Huile(String address, int port) throws UnknownHostException, IOException {
 		super(address, port);
-		this.f02.setAddress(0);
+		this.f02.setAddress(20);
 	}
 
 	private int ALT1;

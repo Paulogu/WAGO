@@ -10,13 +10,13 @@ import com.mint.io.modbus.utilities.ByteUtilities;
 
 public class Auxiliaire_Refrigerant extends ModbusTCP_Device{
 	
-	private ModbusTCP_ReadInputRegisters f01 = new ModbusTCP_ReadInputRegisters(0, 2);
-	private ModbusTCP_WriteMultipleRegisters f02 = new ModbusTCP_WriteMultipleRegisters(0, 2);
+	private ModbusTCP_ReadInputRegisters f01 = new ModbusTCP_ReadInputRegisters(67,2);
+	private ModbusTCP_WriteMultipleRegisters f02 = new ModbusTCP_WriteMultipleRegisters(12,2);
 	private ModbusTCP_WriteMultipleCoils f03 = new ModbusTCP_WriteMultipleCoils();
 	
 	public Auxiliaire_Refrigerant(String address, int port) throws UnknownHostException, IOException {
 		super(address, port);
-		this.f03.setAddress(0);
+		this.f03.setAddress(18);
 	}
 
 	private int ACLT1,

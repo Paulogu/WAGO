@@ -3,7 +3,7 @@ package control2;
 public class Security_Check {
 	
 	private Plant plant;
-	private boolean NidecAlarme,
+	/*private boolean NidecAlarme,
 					NidecDefaut,
 					NidecBR,
 					NidecTooHot,
@@ -143,5 +143,5 @@ public class Security_Check {
 			this.WPUMP2_pOut_tooHigh = true;
 			mode = Mode.WaterloopSecurity;
 		}
-	}
+	}*/
 }

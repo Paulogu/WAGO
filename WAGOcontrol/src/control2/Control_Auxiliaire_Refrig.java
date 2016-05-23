@@ -29,7 +29,7 @@ public class Control_Auxiliaire_Refrig {
 
 	};
 	
-	public void control(Mode mode){
+	public void control(Mode mode){/*
 		n++;
 		if (mode==Mode.EmergencyShutdown || mode==Mode.Shutdown){
 			plant.aux2.setACP1(false);
@@ -44,6 +44,6 @@ public class Control_Auxiliaire_Refrig {
 				plant.aux2.setACP1(!(plant.aux2.getACP2()));
 				n=0;
 			}
-		}
+		}*/
 	}	
 }

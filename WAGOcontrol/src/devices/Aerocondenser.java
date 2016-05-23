@@ -9,8 +9,8 @@ import com.mint.io.modbus.utilities.ByteUtilities;
 
 public class Aerocondenser extends ModbusTCP_Device{
 
-	private ModbusTCP_WriteMultipleRegisters f01 = new ModbusTCP_WriteMultipleRegisters(0x00, 2);
-	private ModbusTCP_ReadInputRegisters f02 = new ModbusTCP_ReadInputRegisters(0x00, 1);
+	private ModbusTCP_WriteMultipleRegisters f01 = new ModbusTCP_WriteMultipleRegisters(4,2);
+	private ModbusTCP_ReadInputRegisters f02 = new ModbusTCP_ReadInputRegisters(47,1);
 	
 	public Aerocondenser(String address, int port) throws UnknownHostException, IOException {
 		super(address, port);
