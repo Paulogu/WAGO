@@ -57,6 +57,10 @@ public class Control_Motor_320 {
 	int n=0,n1=0,n2=0;
 	int position_actu=0,position_valve=0;
 	public void control(){
+		this.pid_valve.min=0;
+		this.pid_actuateur.min=0;
+		this.pid_valve.max=15;
+		this.pid_actuateur.max=15;
 		if (this.mode==Mode.STOP){
 			plant.JGC320.setValveToORC(false);
 			plant.JGC320.setValveToBypass(true);
