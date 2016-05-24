@@ -34,7 +34,7 @@ public class Security_Check {
 					Actuateur_J320_BLOCKED,
 					Actuateur_J416_BLOCKED;
 	
-	/*
+	
 	public void ResetErrors(){
 		this.NidecAlarme = false;
 		this.NidecDefaut = false;
@@ -65,7 +65,7 @@ public class Security_Check {
 		this.ALT1_oilTooLow = false;
 		this.Actuateur_J320_BLOCKED = false;
 		this.Actuateur_J416_BLOCKED = false;
-	}*/
+	}
 	
 	public void AuxiliariesCheck (){
 		if (plant.aux1.getALT1()>75){
@@ -124,26 +124,26 @@ public class Security_Check {
 			mode = Mode.Urgence;
 		}
 	}
-	/*
-	public void WaterloopOverpressureCheck (Mode mode){
-		if (plant.pumpGlycol1.getinPressure() > 10){
+	
+	public void WaterloopOverpressureCheck (){
+		if (plant.pumpGlycol_320.getinPressure() > 10){
 			this.WPUMP1_pIn_tooHigh = true;
-			mode = Mode.WaterloopSecurity;
+			mode = Mode.Urgence;
 		}
 		
-		if (plant.pumpGlycol1.getoutPressure() > 10){
+		if (plant.pumpGlycol_320.getoutPressure() > 10){
 			this.WPUMP1_pOut_tooHigh = true;
-			mode = Mode.WaterloopSecurity;
+			mode = Mode.Urgence;
 		}
 
-		if (plant.pumpGlycol2.getoutPressure() > 10){
+		if (plant.pumpGlycol_416.getoutPressure() > 10){
 			this.WPUMP2_pOut_tooHigh = true;
-			mode = Mode.WaterloopSecurity;
+			mode = Mode.Urgence;
 		}
 
-		if (plant.pumpGlycol2.getoutPressure() > 10){
+		if (plant.pumpGlycol_416.getoutPressure() > 10){
 			this.WPUMP2_pOut_tooHigh = true;
-			mode = Mode.WaterloopSecurity;
+			mode = Mode.Urgence;
 		}
-	}*/
+	}
 }

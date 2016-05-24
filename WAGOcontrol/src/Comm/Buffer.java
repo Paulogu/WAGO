@@ -1,0 +1,67 @@
+package Comm;
+
+import control2.Plant;
+
+public class Buffer {
+	
+	private Plant plant;
+	public String data;
+	public void update(){
+		data=Double.toString(plant.aero.getTRSA())+"|"
+			+Double.toString(plant.aero.getCOND1_2())+"|"
+			+Boolean.toString(plant.aux1.getALAC1())+"|"
+			+Double.toString(plant.aux1.getALT1())+"|"
+			+Double.toString(plant.aux2.getACCV1())+"|"
+			+Double.toString(plant.aux2.getACCV2())+"|"
+			+Double.toString(plant.aux2.getACLT1())+"|"
+			+Double.toString(plant.aux2.getaclt1_setpoint())+"|"
+			+Boolean.toString(plant.aux2.getACP1())+"|"
+			+Boolean.toString(plant.aux2.getACP2())+"|"
+			+Double.toString(plant.cool.getContainerCooling())+"|"
+			+Double.toString(plant.cool.getT_CONT())+"|"
+			+Double.toString(plant.echang.getPRS())+"|"
+			+Double.toString(plant.echang.getT_amb())+"|"
+			+Double.toString(plant.echang.getTES())+"|"
+			+Double.toString(plant.echang.getTRS())+"|"
+			+Double.toString(plant.echang.getTRSP())+"|"
+			+Double.toString(plant.JGC320.getTCRA())+"|"
+			+Double.toString(plant.JGC320.getTCRR())+"|"
+			+Double.toString(plant.JGC320.gettemperatureIn())+"|"
+			+Double.toString(plant.JGC320.gettemperatureOut())+"|"
+			+Double.toString(plant.JGC320.getTESI())+"|"
+			+Double.toString(plant.JGC320.getTFA())+"|"
+			+Double.toString(plant.JGC320.getTFR())+"|"
+			+Double.toString(plant.JGC320.getthermalPower())+"|"
+			+Double.toString(plant.JGC320.gettotalEnergy())+"|"
+			+Double.toString(plant.JGC320.getvolumeFlow())+"|"
+			+Double.toString(plant.JGC416.getTCRA())+"|"
+			+Double.toString(plant.JGC416.getTCRR())+"|"
+			+Double.toString(plant.JGC416.gettemperatureIn())+"|"
+			+Double.toString(plant.JGC416.gettemperatureOut())+"|"
+			+Double.toString(plant.JGC416.getTESI())+"|"
+			+Double.toString(plant.JGC416.getTFA())+"|"
+			+Double.toString(plant.JGC416.getTFR())+"|"
+			+Double.toString(plant.JGC416.getthermalPower())+"|"
+			+Double.toString(plant.JGC416.gettotalEnergy())+"|"
+			+Double.toString(plant.JGC416.getvolumeFlow())+"|"
+			+Double.toString(plant.JGC416.getvolumeFlow())+"|"
+			+Double.toString(plant.pumpGlycol_320.getelec_consumption())+"|"
+			+Double.toString(plant.pumpGlycol_320.getflow())+"|"
+			+Double.toString(plant.pumpGlycol_320.getinPressure())+"|"
+			+Double.toString(plant.pumpGlycol_320.getoutPressure())+"|"
+			+Double.toString(plant.pumpGlycol_320.getregulation_setpoint())+"|"
+			+Double.toString(plant.pumpGlycol_320.getRotationSpeed())+"|"
+			+Double.toString(plant.pumpGlycol_320.getstatus())+"|"
+			+Double.toString(plant.pumpGlycol_320.gettemperature())+"|"
+			+Double.toString(plant.pumpGlycol_320.gettime_to_maintenance())+"|"
+			+Double.toString(plant.pumpGlycol_416.getelec_consumption())+"|"
+			+Double.toString(plant.pumpGlycol_416.getflow())+"|"
+			+Double.toString(plant.pumpGlycol_416.getinPressure())+"|"
+			+Double.toString(plant.pumpGlycol_416.getoutPressure())+"|"
+			+Double.toString(plant.pumpGlycol_416.getregulation_setpoint())+"|"
+			+Double.toString(plant.pumpGlycol_416.getRotationSpeed())+"|"
+			+Double.toString(plant.pumpGlycol_416.getstatus())+"|"
+			+Double.toString(plant.pumpGlycol_416.gettemperature())+"|"
+			+Double.toString(plant.pumpGlycol_416.gettime_to_maintenance())+"|";
+	}
+}
