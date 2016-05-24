@@ -30,7 +30,7 @@ public class Control_Aero{
 
 	};
 	
-	public void control(Mode mode){
+	public void control(){
 		pid.compute();
 	}
 }

@@ -54,7 +54,7 @@ public class Control_Motor_320 {
 
 	};
 	
-	int n=0,n1=0,n2=0;
+	int n=0,n1=0,n2=0,n10=0;
 	int position_actu=0,position_valve=0;
 	public void control(){
 		this.pid_valve.min=0;
@@ -117,10 +117,44 @@ public class Control_Motor_320 {
 			
 		}
 		if (this.mode==Mode.RunToStop){
-			//if()
+			if(plant.JGC320.gettotalEnergy()<0.03){
+				plant.JGC320.setActuatorToBypass(true);
+				plant.JGC320.setValveToBypass(true);
+				mode=Mode.STOP;
+			}
 		}
 		if (this.mode==Mode.StopToRun){
-			
+			if(plant.JGC320.gettotalEnergy()>0.03){
+				n10++;
+				if (n10<10*60){
+					if (position_actu-(int)pid_actuateur.getOutput()>0){
+						n1++;
+						plant.JGC320.setActuatorToORC(true);
+						if (position_actu-(int)pid_actuateur.getOutput()>=n1){
+							n1=0;
+							plant.JGC320.setActuatorToORC(false);
+							position_actu=(int)pid_actuateur.getOutput();
+						}
+					}
+					else{
+						n1++;
+						plant.JGC320.setActuatorToBypass(true);
+						if (position_actu-(int)pid_actuateur.getOutput()>=n1){
+							n1=0;
+							plant.JGC320.setActuatorToBypass(false);
+							position_actu=(int)pid_actuateur.getOutput();
+						}
+					}
+				}
+				else{
+					if (plant.JGC320.gettotalEnergy()<0.05){
+						plant.JGC320.setActuatorToBypass(true);
+					}
+					else{
+						mode=Mode.RUN;
+					}
+				}
+			}
 		}
 	}
 }

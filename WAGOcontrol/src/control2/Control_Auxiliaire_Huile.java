@@ -2,6 +2,7 @@ package control2;
 
 public class Control_Auxiliaire_Huile {
 	
+	private Mode mode;
 	private Plant plant;
 	private double margin;
 	private double hysteresis;
@@ -10,7 +11,7 @@ public class Control_Auxiliaire_Huile {
 		return Math.pow(Math.log(value),4) * 0.7101 + Math.pow(Math.log(value),3) * 3.4647 + Math.pow(Math.log(value),2) * 13.655 + Math.log(value) * 57.095 + 14.819;
 	}
 	
-	public void control(Mode mode){
+	public void control(){
 		this.margin=10;
 		this.hysteresis=10;
 		if (mode==Mode.Urgence){

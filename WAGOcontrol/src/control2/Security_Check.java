@@ -2,8 +2,9 @@ package control2;
 
 public class Security_Check {
 	
+	private Mode mode;
 	private Plant plant;
-	/*private boolean NidecAlarme,
+	private boolean NidecAlarme,
 					NidecDefaut,
 					NidecBR,
 					NidecTooHot,
@@ -33,6 +34,7 @@ public class Security_Check {
 					Actuateur_J320_BLOCKED,
 					Actuateur_J416_BLOCKED;
 	
+	/*
 	public void ResetErrors(){
 		this.NidecAlarme = false;
 		this.NidecDefaut = false;
@@ -63,7 +65,7 @@ public class Security_Check {
 		this.ALT1_oilTooLow = false;
 		this.Actuateur_J320_BLOCKED = false;
 		this.Actuateur_J416_BLOCKED = false;
-	}
+	}*/
 	
 	public void AuxiliariesCheck (){
 		if (plant.aux1.getALT1()>75){
@@ -76,10 +78,10 @@ public class Security_Check {
 		}
 	}
 	
-	public void GeneratorCheck (Mode mode){
-		if (plant.turbo.getCONV_OBI_Marche() && mode == Mode.Started){
+	public void GeneratorCheck (){
+		/*if (plant.turbo.getCONV_OBI_Marche() && mode == Mode.Started){
 				mode = Mode.ShuttingDown;
-		}
+		}*/
 		if ( plant.turbo.gettempKTY1S1() > 80
 				|| plant.turbo.gettempKTY1S2() > 80
 				|| plant.turbo.gettempKTY1S3() > 80
@@ -102,27 +104,27 @@ public class Security_Check {
 		}
 	}
 	
-	public void RefrigerantOverpressureCheck(Mode mode){
+	public void RefrigerantOverpressureCheck(){
 		if (plant.echang.getPRS() > 10){
 			this.PRS_tooHigh = true;
-			mode = Mode.ShuttingDown;
+			mode = Mode.Urgence;
 		}
 		if (plant.turbo.getPRST() > 10){
 			this.PRST_tooHigh = true;
-			mode = Mode.ShuttingDown;
+			mode = Mode.Urgence;
 		}
 
 		if (plant.pumpWater.getinPressure() > 10){
 			this.RPUMP_pIn_tooHigh = true;
-			mode = Mode.ShuttingDown;
+			mode = Mode.Urgence;
 		}
 
 		if (plant.pumpWater.getoutPressure() > 10){
 			this.RPUMP_pOut_tooHigh = true;
-			mode = Mode.ShuttingDown;
+			mode = Mode.Urgence;
 		}
 	}
-	
+	/*
 	public void WaterloopOverpressureCheck (Mode mode){
 		if (plant.pumpGlycol1.getinPressure() > 10){
 			this.WPUMP1_pIn_tooHigh = true;

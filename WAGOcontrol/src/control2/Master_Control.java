@@ -21,16 +21,16 @@ public class Master_Control {
 		
 		while(true){
 			TimeUnit.SECONDS.sleep(1);
-			aero.control(mode);
-			aux1.control(mode);
-			aux2.control(mode);
-			cool.control(mode);
+			aero.control();
+			aux1.control();
+			aux2.control();
+			cool.control();
 			M1.control();
 			M2.control();
 			pumpG1.control();
 			pumpG2.control();
 			pumpW.control();
-			turbo.control(mode);
+			turbo.control();
 		}
 	}
 }

@@ -2,6 +2,7 @@ package control2;
 
 public class Control_Auxiliaire_Refrig {
 	
+	private Mode mode;
 	private Plant plant;
 	private int n=0;
 	private PID pid = new PID() {
@@ -29,9 +30,9 @@ public class Control_Auxiliaire_Refrig {
 
 	};
 	
-	public void control(Mode mode){/*
+	public void control(){
 		n++;
-		if (mode==Mode.EmergencyShutdown || mode==Mode.Shutdown){
+		if (mode==Mode.STOP){
 			plant.aux2.setACP1(false);
 			plant.aux2.setACP1(false);
 			plant.aux2.setACCV1(0);
@@ -44,6 +45,6 @@ public class Control_Auxiliaire_Refrig {
 				plant.aux2.setACP1(!(plant.aux2.getACP2()));
 				n=0;
 			}
-		}*/
+		}
 	}	
 }

@@ -2,6 +2,7 @@ package control2;
 
 public class Control_Turbo {
 	
+	private Mode mode;
 	private Plant plant;
 	private double superheating = 3; // en [K]
 	private PID pid = new PID() {
@@ -27,7 +28,7 @@ public class Control_Turbo {
 		}
 	};
 	
-	public void control(Mode mode){
+	public void control(){
 		/*this.pid.max=3200;
 		this.pid.min=600;
 		if (mode==Mode.EmergencyShutdown || mode==Mode.ShuttingDown){

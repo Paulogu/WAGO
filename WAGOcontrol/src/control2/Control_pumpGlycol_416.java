@@ -2,6 +2,7 @@ package control2;
 
 public class Control_pumpGlycol_416 {
 
+		private Mode mode;
 		private Plant plant;
 		private PID pid = new PID() {
 			
@@ -29,7 +30,12 @@ public class Control_pumpGlycol_416 {
 		};
 		
 		public void control(){		
-			pid.compute();
+			if (mode==Mode.RUN){
+				pid.compute();
+			}
+			else{
+				plant.pumpGlycol_320.setRotationSpeed(0);
+			}
 		}	
 }
 
